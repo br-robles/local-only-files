@@ -1,0 +1,98 @@
+{
+  "name": "local-only-files",
+  "displayName": "Local Only Files",
+  "description": "Maintain local modifications in tracked files without committing them",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "workspaceContains:.git"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "gitLocalOnly.addToLocalOnly",
+        "title": "Add to Local Only",
+        "category": "Git"
+      },
+      {
+        "command": "gitLocalOnly.removeFromLocalOnly",
+        "title": "Remove from Local Only",
+        "category": "Git"
+      },
+      {
+        "command": "gitLocalOnly.refresh",
+        "title": "Refresh Local Only",
+        "icon": "$(refresh)"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "gitLocalOnly.addToLocalOnly",
+          "when": "resourceScheme == file",
+          "group": "git"
+        }
+      ],
+      "scm/resourceState/context": [
+        {
+          "command": "gitLocalOnly.addToLocalOnly",
+          "when": "scmProvider == git",
+          "group": "inline"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "gitLocalOnly.refresh",
+          "when": "view == gitLocalOnlyView",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "gitLocalOnly.removeFromLocalOnly",
+          "when": "view == gitLocalOnlyView",
+          "group": "inline"
+        }
+      ]
+    },
+    "views": {
+      "scm": [
+        {
+          "id": "gitLocalOnlyView",
+          "name": "Local Only Files"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "@types/node": "^18.x",
+    "typescript": "^5.1.3"
+  },
+  "publisher": "BrunoRobles",
+  "icon": "icon.jpg",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/br-robles/local-only-files.git"
+  },
+  "keywords": [
+    "git",
+    "local only",
+    "skip-worktree",
+    "scm"
+  ]
+}
